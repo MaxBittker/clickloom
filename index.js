@@ -4,24 +4,21 @@ let targetElement = document.getElementById("target");
 const { setupOverlay } = require("regl-shader-error-overlay");
 setupOverlay();
 
-let pixelRatio = Math.min(window.devicePixelRatio, 2.0);
+let pixelRatio = Math.min(window.devicePixelRatio, 1.0);
+target.width = window.innerWidth * pixelRatio;
+target.height = window.innerHeight * pixelRatio;
 const regl = require("regl")({
   canvas: targetElement,
   pixelRatio,
-  // extensions: ["OES_texture_float"],
-  optionalExtensions: [
-    // "oes_texture_float_linear",
-    "WEBGL_debug_renderer_info",
-    "WEBGL_debug_shaders",
-  ],
+  optionalExtensions: ["WEBGL_debug_renderer_info", "WEBGL_debug_shaders"],
 });
 
 let postShaders = require("./src/post.shader.js");
 let setupHandlers = require("./src/touch.js");
-let { getContext, drawDot } = require("./src/paint.js");
+let { getContext, drawLine } = require("./src/paint.js");
 
 var doPop = false;
-drawDot();
+// drawDot(250, 250);
 // var undoStack = [];
 
 function pushState() {
@@ -38,7 +35,7 @@ function popState() {
   doPop = true;
 }
 let { getPointers, processQueue } = setupHandlers(
-  regl._gl.canvas,
+  targetElement,
   pixelRatio,
   pushState,
   popState
@@ -81,6 +78,18 @@ regl.frame(function ({ viewportWidth, viewportHeight, tick }) {
   ctx = getContext();
   // console.log(viewportWidth);
   // return;
+  do {
+    // console.log(pointers);
+    pointers.forEach((pointer) => {
+      if (!pointer.down) {
+        return;
+      }
+      pointer.moved = false;
+      drawLine(pointer);
+      pointer.prevX = pointer.x;
+      pointer.prevY = pointer.y;
+    });
+  } while (processQueue() > 0);
   // paintTexture.resize(window.viewportWidth * 4, window.viewportHeight * 4);
   paintTexture.subimage(ctx);
 

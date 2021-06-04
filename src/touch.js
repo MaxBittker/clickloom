@@ -19,10 +19,10 @@ function setupHandlers(canvas, pixelRatio, pushState, popState) {
 
   function pointerPrototype() {
     this.id = -1;
-    this.texcoordX = 0;
-    this.texcoordY = 0;
-    this.prevTexcoordX = 0;
-    this.prevTexcoordY = 0;
+    this.x = 0;
+    this.y = 0;
+    this.prevX = 0;
+    this.prevY = 0;
     this.deltaX = 0;
     this.deltaY = 0;
     this.down = false;
@@ -39,10 +39,10 @@ function setupHandlers(canvas, pixelRatio, pushState, popState) {
     pointer.id = id;
     pointer.down = true;
     pointer.moved = false;
-    pointer.texcoordX = posX / canvas.width;
-    pointer.texcoordY = 1.0 - posY / canvas.height;
-    pointer.prevTexcoordX = pointer.texcoordX;
-    pointer.prevTexcoordY = pointer.texcoordY;
+    pointer.x = posX; // canvas.width;
+    pointer.y = posY; // canvas.height;
+    pointer.prevX = pointer.x;
+    pointer.prevY = pointer.y;
     pointer.deltaX = 0;
     pointer.deltaY = 0;
     pointer.force = force;
@@ -66,10 +66,8 @@ function setupHandlers(canvas, pixelRatio, pushState, popState) {
 
   function updatePointerMoveData({ pointerId, posX, posY, force = 0.5 }) {
     let pointer = pointers.find((p) => p.id == pointerId);
-    // pointer.prevTexcoordX = pointer.texcoordX;
-    // pointer.prevTexcoordY = pointer.texcoordY;
-    pointer.texcoordX = posX / canvas.width;
-    pointer.texcoordY = 1.0 - posY / canvas.height;
+    pointer.x = posX;
+    pointer.y = posY;
     // pointer.deltaX = correctDeltaX(pointer.texcoordX - pointer.prevTexcoordX);
     // pointer.deltaY = correctDeltaY(pointer.texcoordY - pointer.prevTexcoordY);
     pointer.moved =
