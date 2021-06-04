@@ -1,15 +1,15 @@
 // courtesy to PavelDoGreat/WebGL-Fluid-Simulation.
 let undo = document.getElementById("undo");
 function setupHandlers(canvas, pixelRatio, pushState, popState) {
-  undo.addEventListener("click", e => {
+  undo.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
-    popState();
+    // popState();
   });
-  undo.addEventListener("mouseup", e => {
+  undo.addEventListener("mouseup", (e) => {
     e.stopPropagation();
   });
-  undo.addEventListener("touchend", e => {
+  undo.addEventListener("touchend", (e) => {
     e.stopPropagation();
   });
 
@@ -65,7 +65,7 @@ function setupHandlers(canvas, pixelRatio, pushState, popState) {
   }
 
   function updatePointerMoveData({ pointerId, posX, posY, force = 0.5 }) {
-    let pointer = pointers.find(p => p.id == pointerId);
+    let pointer = pointers.find((p) => p.id == pointerId);
     // pointer.prevTexcoordX = pointer.texcoordX;
     // pointer.prevTexcoordY = pointer.texcoordY;
     pointer.texcoordX = posX / canvas.width;
@@ -88,15 +88,15 @@ function setupHandlers(canvas, pixelRatio, pushState, popState) {
     if (aspectRatio > 1) delta /= aspectRatio;
     return delta;
   }
-  canvas.addEventListener("mousedown", e => {
+  canvas.addEventListener("mousedown", (e) => {
     let posX = scaleByPixelRatio(e.offsetX);
     let posY = scaleByPixelRatio(e.offsetY);
-    let pointer = pointers.find(p => p.id == -1);
+    let pointer = pointers.find((p) => p.id == -1);
     if (pointer == null) pointer = new pointerPrototype();
     updatePointerDownData(pointer, -1, posX, posY);
   });
 
-  canvas.addEventListener("mousemove", e => {
+  canvas.addEventListener("mousemove", (e) => {
     let pointer = pointers[0];
     if (!pointer.down) return;
     let posX = scaleByPixelRatio(e.offsetX);
@@ -106,10 +106,10 @@ function setupHandlers(canvas, pixelRatio, pushState, popState) {
 
   window.addEventListener("mouseup", () => {
     updatePointerUpData(pointers[0]);
-    pushState();
+    // pushState();
   });
 
-  canvas.addEventListener("touchstart", e => {
+  canvas.addEventListener("touchstart", (e) => {
     e.preventDefault();
     const touches = e.targetTouches;
     while (touches.length >= pointers.length)
@@ -130,7 +130,7 @@ function setupHandlers(canvas, pixelRatio, pushState, popState) {
 
   canvas.addEventListener(
     "touchmove",
-    e => {
+    (e) => {
       e.preventDefault();
       const touches = e.targetTouches;
       for (let i = 0; i < touches.length; i++) {
@@ -147,18 +147,18 @@ function setupHandlers(canvas, pixelRatio, pushState, popState) {
     false
   );
 
-  window.addEventListener("touchend", e => {
+  window.addEventListener("touchend", (e) => {
     const touches = e.changedTouches;
     for (let i = 0; i < touches.length; i++) {
-      let pointer = pointers.find(p => p.id == touches[i].identifier);
+      let pointer = pointers.find((p) => p.id == touches[i].identifier);
       if (pointer == null) continue;
       updatePointerUpData(pointer);
     }
-    let nDown = pointers.filter(p => p.down).length;
+    let nDown = pointers.filter((p) => p.down).length;
 
     if (nDown == 0) {
       console.log("touchend");
-      pushState();
+      // pushState();
     }
   });
 
@@ -167,7 +167,7 @@ function setupHandlers(canvas, pixelRatio, pushState, popState) {
       console.log(pointers);
       return pointers;
     },
-    processQueue
+    processQueue,
   };
 }
 
