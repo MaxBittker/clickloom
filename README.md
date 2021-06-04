@@ -1,3 +1,3 @@
-# webgl drawing pad experiment
+# online loom
 
-![scribble](scrible.png)
+<!-- ![scribble](scrible.png) -->
