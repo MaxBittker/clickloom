@@ -6,10 +6,10 @@ let defaultPallette = document.getElementById("defaultPallette");
 
 let ctx;
 
-defaultPallette.addEventListener("load", () => {
-  if (ctx);
-  ctx.drawImage(defaultPallette, 0, 0, width, height);
-});
+// defaultPallette.addEventListener("load", () => {
+//   if (ctx);
+//   ctx.drawImage(defaultPallette, 0, 0, width, height);
+// });
 function rgbToHex(r, g, b) {
   if (r > 255 || g > 255 || b > 255) throw "Invalid color component";
   return ((r << 16) | (g << 8) | b).toString(16);
@@ -60,7 +60,10 @@ function PipettePicker({ mode, setMode }) {
     if (!canvas) return;
     if (!ctx) ctx = canvas.getContext("2d");
     ctx.drawImage(defaultPallette, 0, 0, width, height);
-
+    let [x, y] = [50, 50];
+    var p = ctx.getImageData(x, y, 1, 1).data;
+    var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+    setColor(hex);
     // draw(ctx, width, height);
   }, [canvasRef]);
 
@@ -98,7 +101,6 @@ function PipettePicker({ mode, setMode }) {
         var p = ctx.getImageData(x, y, 1, 1).data;
         var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
         setColor(hex);
-
         // updateValue(createPreviewDataURL(image));
       });
 
@@ -108,12 +110,7 @@ function PipettePicker({ mode, setMode }) {
   );
 
   const fileInputRef = useRef(null);
-  useEffect(() => {
-    let [x, y] = [50, 50];
-    var p = ctx.getImageData(x, y, 1, 1).data;
-    var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
-    setColor(hex);
-  }, []);
+
   return (
     <div className="picker">
       <input
