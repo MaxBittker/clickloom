@@ -14,6 +14,7 @@ const regl = require("regl")({
 });
 
 let postShaders = require("./src/post.shader.js");
+let startUI = require("./src/app.jsx");
 let setupHandlers = require("./src/touch.js");
 let { getContext, drawLine } = require("./src/paint.js");
 
@@ -41,7 +42,7 @@ let { getPointers, processQueue } = setupHandlers(
   popState
 );
 
-pointers = getPointers();
+let pointers = getPointers();
 postShaders.on("change", () => {
   console.log("update");
   vert = shaders.vertex;
@@ -75,7 +76,7 @@ const drawFboBlurred = regl({
 });
 
 regl.frame(function ({ viewportWidth, viewportHeight, tick }) {
-  ctx = getContext();
+  let ctx = getContext();
   // console.log(viewportWidth);
   // return;
   do {

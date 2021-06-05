@@ -14,15 +14,18 @@ float t;
 void main() {
   float gridSize = 12.0;
   float halfG = gridSize/2.0;
-  float fillRate = 0.6;
+  float fillRate = 0.7;
+  float weftRatio = 0.8;
   vec2 pixel = 1.0 /resolution;
   vec3 color = vec3(0.9);
   vec3 data = texture2D(tex, vec2(uv.x,1.0-uv.y)).rgb;
   vec2 coord = (uv)* resolution/gridSize;
   vec2 index = vec2(floor(coord.x),floor(coord.y)); 
+  vec2 threadIndex = index * gridSize/resolution;
+
   vec2 local = (coord - index)*gridSize - vec2(halfG);
-  vec3 warpColor = vec3(0.5,0.4,0.7);
-  vec3 weftColor = vec3(0.9,0.7,0.8);
+  vec3 warpColor = texture2D(tex, vec2(0,1.0-threadIndex.y)).rgb;
+  vec3 weftColor = texture2D(tex, vec2(threadIndex.x,0)).rgb;
   vec3 overColor = warpColor;
   vec3 underColor = weftColor;
   if(  mod( index.x+index.y,2.0) <1.0){
@@ -33,6 +36,7 @@ void main() {
    local.xy= local.yx;
   }
    if(abs(local.y)<halfG*fillRate){
+
     color = underColor ;
 
   }else   if(abs(local.x)<halfG*fillRate){
@@ -44,7 +48,7 @@ void main() {
   // }
 
   gl_FragColor.rgb = color;
-  gl_FragColor.rgb-= data;
+  // gl_FragColor.rgb-= data;
 
   gl_FragColor.a=1.0;
   // gl_FragColor = dither(uv, gl_FragColor.rgba);
