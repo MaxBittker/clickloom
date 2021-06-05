@@ -5,29 +5,51 @@ import classNames from "classnames";
 import { PipettePicker } from "./picker.jsx";
 
 const App = () => {
-  let [mode, setMode] = useState("weft");
+  let [mode, setMode] = useState("color");
 
   useEffect(() => {
     window.mode = mode;
   }, mode);
   return (
-    <div>
+    <div className="buttonGroup">
       <button id="undo">Undo</button>
+      <PipettePicker mode={mode} setMode={setMode} />
       <button
-        id="weft"
-        className={classNames({ active: mode === "weft" })}
-        onClick={() => setMode("weft")}
+        id="color"
+        className={classNames({ active: mode === "color" })}
+        onClick={() => setMode("color")}
       >
-        weft
+        color
+      </button>
+      <br></br>
+      <button
+        id="plain"
+        className={classNames({ active: mode === "plain" })}
+        onClick={() => setMode("plain")}
+      >
+        plain
       </button>
       <button
-        id="warp"
-        className={classNames({ active: mode === "warp" })}
-        onClick={() => setMode("warp")}
+        id="twill"
+        className={classNames({ active: mode === "twill" })}
+        onClick={() => setMode("twill")}
       >
-        warp
+        twill
       </button>
-      <PipettePicker />
+      <button
+        id="reverse plain"
+        className={classNames({ active: mode === "reverse plain" })}
+        onClick={() => setMode("reverse plain")}
+      >
+        reverse plain
+      </button>
+      <button
+        id="reverse twill"
+        className={classNames({ active: mode === "reverse twill" })}
+        onClick={() => setMode("reverse twill")}
+      >
+        reverse twill
+      </button>
     </div>
   );
 };

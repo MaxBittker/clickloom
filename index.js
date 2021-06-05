@@ -85,10 +85,9 @@ regl.frame(function ({ viewportWidth, viewportHeight, tick }) {
       if (!pointer.down) {
         return;
       }
-      pointer.moved = false;
       drawLine(pointer);
-      pointer.prevX = pointer.x;
-      pointer.prevY = pointer.y;
+      // pointer.prevX = pointer.x;
+      // pointer.prevY = pointer.y;
     });
   } while (processQueue() > 0);
   // paintTexture.resize(window.viewportWidth * 4, window.viewportHeight * 4);

@@ -49,10 +49,10 @@ function draw(ctx, width, height) {
   ctx.lineTo(width, height);
   ctx.stroke();
 }
-function PipettePicker() {
+function PipettePicker({ mode, setMode }) {
   const canvasRef = React.useRef();
-  const width = 250;
-  const height = 250;
+  const width = 150;
+  const height = 150;
   let [color, setColor] = useState("#000");
   let [previewColor, setPreviewColor] = useState(null);
   useEffect(() => {
@@ -94,6 +94,11 @@ function PipettePicker() {
 
       image.addEventListener("load", () => {
         ctx.drawImage(image, 0, 0, width, height);
+        let [x, y] = [50, 50];
+        var p = ctx.getImageData(x, y, 1, 1).data;
+        var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+        setColor(hex);
+
         // updateValue(createPreviewDataURL(image));
       });
 
@@ -103,23 +108,20 @@ function PipettePicker() {
   );
 
   const fileInputRef = useRef(null);
-
+  useEffect(() => {
+    let [x, y] = [50, 50];
+    var p = ctx.getImageData(x, y, 1, 1).data;
+    var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+    setColor(hex);
+  }, []);
   return (
-    <div>
+    <div className="picker">
       <input
         type="file"
         style={{ display: "none" }}
         onChange={onSelectFile}
         ref={fileInputRef}
       />
-      <button
-        icon="Upload"
-        onClick={() => {
-          fileInputRef.current?.click();
-        }}
-      >
-        Browse Files...
-      </button>
 
       <canvas
         ref={canvasRef}
@@ -130,6 +132,7 @@ function PipettePicker() {
           var p = ctx.getImageData(x, y, 1, 1).data;
           var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
           setColor(hex);
+          setMode("color");
         }}
         onMouseMove={(e) => {
           let [x, y] = convertEventCoordinates(canvasRef.current, e);
@@ -141,6 +144,15 @@ function PipettePicker() {
           setPreviewColor(null);
         }}
       ></canvas>
+      <button
+        icon="Upload"
+        onClick={() => {
+          fileInputRef.current?.click();
+        }}
+      >
+        Upload Pallette Image
+      </button>
+
       <div
         className="colorBox"
         style={{ backgroundColor: previewColor || color, borderColor: color }}

@@ -26,7 +26,7 @@ function setupHandlers(canvas, pixelRatio, pushState, popState) {
     this.deltaX = 0;
     this.deltaY = 0;
     this.down = false;
-    this.moved = false;
+    // this.moved = false;
     this.color = [30, 0, 300];
     this.force = 0.5;
     this.missed = 0;
@@ -38,13 +38,13 @@ function setupHandlers(canvas, pixelRatio, pushState, popState) {
   function updatePointerDownData(pointer, id, posX, posY, force = 0.5) {
     pointer.id = id;
     pointer.down = true;
-    pointer.moved = false;
+    // pointer.moved = false;
     pointer.x = posX; // canvas.width;
     pointer.y = posY; // canvas.height;
     pointer.prevX = pointer.x;
     pointer.prevY = pointer.y;
-    pointer.deltaX = 0;
-    pointer.deltaY = 0;
+    // pointer.deltaX = 0;
+    // pointer.deltaY = 0;
     pointer.force = force;
     //   pointer.color = generateColor();
   }
@@ -68,24 +68,24 @@ function setupHandlers(canvas, pixelRatio, pushState, popState) {
     let pointer = pointers.find((p) => p.id == pointerId);
     pointer.x = posX;
     pointer.y = posY;
-    // pointer.deltaX = correctDeltaX(pointer.texcoordX - pointer.prevTexcoordX);
-    // pointer.deltaY = correctDeltaY(pointer.texcoordY - pointer.prevTexcoordY);
-    pointer.moved =
-      Math.abs(pointer.deltaX) > 0 || Math.abs(pointer.deltaY) > 0;
+    // pointer.deltaX = pointer.x - pointer.prevX;
+    // pointer.deltaY = pointer.y - pointer.prevY;
+    // pointer.moved =
+    //   Math.abs(pointer.deltaX) > 0 || Math.abs(pointer.deltaY) > 0;
     pointer.force = force;
   }
 
-  function correctDeltaX(delta) {
-    let aspectRatio = canvas.width / canvas.height;
-    if (aspectRatio < 1) delta *= aspectRatio;
-    return delta;
-  }
+  // function correctDeltaX(delta) {
+  //   let aspectRatio = canvas.width / canvas.height;
+  //   if (aspectRatio < 1) delta *= aspectRatio;
+  //   return delta;
+  // }
 
-  function correctDeltaY(delta) {
-    let aspectRatio = canvas.width / canvas.height;
-    if (aspectRatio > 1) delta /= aspectRatio;
-    return delta;
-  }
+  // function correctDeltaY(delta) {
+  //   let aspectRatio = canvas.width / canvas.height;
+  //   if (aspectRatio > 1) delta /= aspectRatio;
+  //   return delta;
+  // }
   canvas.addEventListener("mousedown", (e) => {
     let posX = scaleByPixelRatio(e.offsetX);
     let posY = scaleByPixelRatio(e.offsetY);
