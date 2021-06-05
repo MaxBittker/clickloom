@@ -44,7 +44,14 @@ function drawLine(pointer) {
     } else {
       scaleY = 0;
     }
-  } else if (window.mode === "plain") {
+  } else {
+    pointer.x = Math.max(r * 1.9, pointer.x);
+    pointer.y = Math.max(r * 1.9, pointer.y);
+    pointer.prevX = Math.max(r * 1.9, pointer.prevX);
+    pointer.prevY = Math.max(r * 1.9, pointer.prevY);
+  }
+  //   console.log()
+  if (window.mode === "plain") {
     ctx.strokeStyle = `#210`;
   } else if (window.mode === "twill") {
     ctx.strokeStyle = `#310`;
