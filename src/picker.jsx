@@ -5,11 +5,12 @@ import * as ReactDOM from "react-dom";
 let defaultPallette = document.getElementById("defaultPallette");
 
 let ctx;
-
-// defaultPallette.addEventListener("load", () => {
-//   if (ctx);
-//   ctx.drawImage(defaultPallette, 0, 0, width, height);
-// });
+const width = 150;
+const height = 150;
+defaultPallette.addEventListener("load", () => {
+  if (ctx);
+  ctx.drawImage(defaultPallette, 0, 0, width, height);
+});
 function rgbToHex(r, g, b) {
   if (r > 255 || g > 255 || b > 255) throw "Invalid color component";
   return ((r << 16) | (g << 8) | b).toString(16);
@@ -51,8 +52,7 @@ function draw(ctx, width, height) {
 }
 function PipettePicker({ mode, setMode }) {
   const canvasRef = React.useRef();
-  const width = 150;
-  const height = 150;
+
   let [color, setColor] = useState("#000");
   let [previewColor, setPreviewColor] = useState(null);
   useEffect(() => {

@@ -21,8 +21,9 @@ function distance(pointer) {
   let [dx, dy] = delta(pointer);
   return Math.sqrt(dx * dx + dy * dy);
 }
-let r = 40;
 function drawLine(pointer) {
+  let r = 25;
+
   //   ctx.fillStyle = `#C5C`;
   //   ctx.strokeStyle = `#C5C`;
   ctx.strokeStyle = window.color;
