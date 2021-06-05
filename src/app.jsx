@@ -22,7 +22,6 @@ const App = () => {
       >
         thread color
       </button>
-      <br></br>
       <span>
         <button
           id="plain"
