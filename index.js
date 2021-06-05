@@ -12,7 +12,7 @@ const regl = require("regl")({
   pixelRatio,
   optionalExtensions: ["WEBGL_debug_renderer_info", "WEBGL_debug_shaders"],
 });
-
+window.size = 12;
 let postShaders = require("./src/post.shader.js");
 let startUI = require("./src/app.jsx");
 let setupHandlers = require("./src/touch.js");
@@ -62,6 +62,7 @@ const drawFboBlurred = regl({
   },
   uniforms: {
     t: ({ time }) => time,
+    gridSize: ({}) => window.size || 12,
     tex: paintTexture,
     resolution: ({ viewportWidth, viewportHeight }) => [
       viewportWidth,

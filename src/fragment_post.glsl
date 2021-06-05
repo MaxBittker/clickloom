@@ -4,7 +4,8 @@ varying vec2 uv;
 uniform sampler2D tex;
 uniform float wRcp, hRcp;
 uniform vec2 resolution;
-float t;
+uniform float gridSize;
+uniform float t;
 
 // clang-format off
 // #pragma glslify: dither = require(glsl-dither)
@@ -15,7 +16,6 @@ float t;
 
 void main()
 {
-    float gridSize = 18.0;
     float halfG = gridSize / 2.0;
     float fillRate = 0.7;
     float weftRatio = 0.8;

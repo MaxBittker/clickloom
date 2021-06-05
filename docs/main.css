@@ -52,3 +52,14 @@ body {
   display: flex;
   flex-direction: column;
 }
+.buttonGroup span {
+  display: flex;
+}
+button {
+}
+.buttonGroup span button {
+  width: 50%;
+}
+input {
+  /* width: 80%; */
+}
